@@ -5,10 +5,13 @@ const mongoose = require ('mongoose');
 const cors= require('cors');
 
 const app = express();
+const habitRoutes = require ('./routes/habits');
 
 //middleware
 app.use(cors());
 app.use(express.json());
+
+app.use('/api/habits',habitRoutes);
 
 //test route
 app.get('/',(req,res)=>{
