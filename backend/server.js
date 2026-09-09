@@ -6,12 +6,14 @@ const cors= require('cors');
 
 const app = express();
 const habitRoutes = require ('./routes/habits');
+const journalRoutes = require('./routes/journal');
 
 //middleware
 app.use(cors());
 app.use(express.json());
 
 app.use('/api/habits',habitRoutes);
+app.use('/api/journal',journalRoutes);
 
 //test route
 app.get('/',(req,res)=>{
