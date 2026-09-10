@@ -1,16 +1,26 @@
-import { useEffect, useState } from 'react';
-import api from './api';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
+import Habits from "./pages/Habits";
+import Journal from "./pages/Journal";
+import Progress from "./pages/Progress";
+import "./App.css";
 
 function App() {
-  const [message, setMessage] = useState('Loading...');
-
-  useEffect(() => {
-    api.get('/habits')
-      .then((res) => setMessage(`Connected! Found ${res.data.length} habits.`))
-      .catch((err) => setMessage(`Error: ${err.message}`));
-  }, []);
-
-  return <h1>{message}</h1>;
+  return (
+    <BrowserRouter>
+      <Navbar />
+      <main className="page-content">
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/habits" element={<Habits />} />
+          <Route path="/journal" element={<Journal />} />
+          <Route path="/progress" element={<Progress />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
+  );
 }
 
 export default App;
