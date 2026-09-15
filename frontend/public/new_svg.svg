@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="yellowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFEA00"></stop>
+      <stop offset="100%" stop-color="#ff9d00"></stop>
+    </linearGradient>
+
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="coloredBlur"></feGaussianBlur>
+      <feMerge>
+        <feMergeNode in="coloredBlur"></feMergeNode>
+        <feMergeNode in="SourceGraphic"></feMergeNode>
+      </feMerge>
+    </filter>
+
+    <clipPath id="circleClip">
+      <circle cx="400" cy="400" r="390"></circle>
+    </clipPath>
+  </defs>
+
+  <!-- Circular Icon Background -->
+  <circle cx="400" cy="400" r="390" fill="#09090b"></circle>
+
+  <!-- Everything contained inside the circular icon -->
+  <g clip-path="url(#circleClip)">
+
+    <!-- Subtle Background Rings -->
+    <circle cx="400" cy="400" r="285" fill="none" stroke="#1f1f22" stroke-width="3" stroke-dasharray="10 15"></circle>
+
+    <circle cx="400" cy="400" r="325" fill="none" stroke="#141417" stroke-width="2"></circle>
+
+    <!-- Main Graphic -->
+    <g filter="url(#neonGlow)">
+
+      <!-- Broken Circle -->
+      <path d="M 315 315 A 120 120 0 1 0 485 315" fill="none" stroke="url(#yellowGradient)" stroke-width="20" stroke-linecap="round"></path>
+
+      <!-- Vertical Power Line -->
+      <line x1="400" y1="380" x2="400" y2="250" stroke="url(#yellowGradient)" stroke-width="18" stroke-linecap="round"></line>
+
+      <!-- Arrow Head -->
+      <polygon points="400,210 435,260 365,260" fill="#FFEA00"></polygon>
+    </g>
+
+    <!-- Data / Tech Accents -->
+    <circle cx="315" cy="315" r="5" fill="#ffffff"></circle>
+    <circle cx="485" cy="315" r="5" fill="#ffffff"></circle>
+
+    <rect x="385" y="530" width="30" height="4" fill="#333333"></rect>
+
+  </g>
+</svg>
