@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 function Navbar() {
   return (
     <nav className="navbar">
-      <div className="navbar-brand">LIFE RESET</div>
+      <div className="navbar-brand">Life <span className="brand-accent">Reset</span></div>
       <div className="navbar-links">
         <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>
           Dashboard

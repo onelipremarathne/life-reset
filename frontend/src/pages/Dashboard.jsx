@@ -72,7 +72,6 @@ function Dashboard() {
                 key={habit._id}
                 habit={habit}
                 onToggle={() => handleToggle(habit)}
-                onDelete={() => {}} // no delete from dashboard, pass no-op
               />
             ))
           )}

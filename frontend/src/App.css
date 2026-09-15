@@ -323,3 +323,81 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .navbar { flex-direction: column; gap: var(--space-2); align-items: flex-start; }
   .progress-row { grid-template-columns: 1fr; gap: var(--space-1); }
 }
+
+/* Circular checkbox */
+.circular-checkbox {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  padding: 0;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.circular-checkbox.checked {
+  background: var(--complete);
+  border-color: var(--complete);
+  color: var(--bg);
+}
+
+/* Dot progress */
+.dot-progress {
+  display: flex;
+  gap: 4px;
+}
+
+.dot-progress .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.dot-progress .dot.filled {
+  background: var(--accent);
+}
+
+/* Habit card layout */
+.habit-card-main {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.habit-card-side {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.icon-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.icon-btn.danger:hover {
+  color: var(--danger);
+  background: rgba(193, 102, 107, 0.1);
+}
+
+/* Navbar brand */
+.brand-accent {
+  font-style: italic;
+  color: var(--accent);
+}
