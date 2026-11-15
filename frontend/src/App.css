@@ -217,29 +217,28 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .delete-btn:hover { color: var(--danger); background: rgba(193, 102, 107, 0.1); }
 
 /* Add habit form */
-.add-habit-form { display: flex; gap: var(--space-2); margin-bottom: var(--space-4); }
-
-.add-habit-form input {
+.add-habit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
   background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.add-habit-form input[type="text"] {
+  width: 100%;
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--space-2) var(--space-3);
   color: var(--text-primary);
   font-size: 0.9rem;
 }
-.add-habit-form input:focus { outline: none; border-color: var(--accent); }
-.add-habit-form .emoji-input { width: 48px; text-align: center; flex: none; }
-.add-habit-form input[type="text"]:not(.emoji-input) { flex: 1; }
 
-.add-habit-form button {
-  background: var(--accent);
-  color: var(--accent-text);
-  border: none;
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: 0.9rem;
-}
+.add-habit-form input:focus { outline: none; border-color: var(--accent); }
 
 /* Journal */
 .journal-form {
@@ -400,4 +399,59 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .brand-accent {
   font-style: italic;
   color: var(--accent);
+}
+
+.form-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-2);
+}
+
+.icon-option {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.icon-option:hover { border-color: var(--accent); color: var(--text-primary); }
+
+.icon-option.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.habit-icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-secondary);
+}
+
+.submit-habit-btn {
+  background: var(--accent);
+  color: var(--accent-text);
+  border: none;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  align-self: flex-start;
 }

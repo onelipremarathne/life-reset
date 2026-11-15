@@ -1,6 +1,7 @@
 import { getLast7Days } from '../utils/dateHelpers';
 import CircularCheckbox from './CircularCheckbox';
 import DotProgress from './DotProgress';
+import { getHabitIcon } from '../utils/habitIcons';
 
 function HabitCard({ habit, onToggle, onDelete, onEdit }) {
   const last7 = getLast7Days();
@@ -13,7 +14,12 @@ function HabitCard({ habit, onToggle, onDelete, onEdit }) {
     <div className={`habit-card ${habit.completedToday ? 'completed' : ''}`}>
       <div className="habit-card-main">
         <CircularCheckbox checked={habit.completedToday} onChange={onToggle} />
-        <span className="habit-emoji">{habit.emoji}</span>
+        <span className="habit-icon-badge">
+          {(() => {
+            const Icon = getHabitIcon(habit.icon);
+            return <Icon size={14} strokeWidth={2.2} />;
+           })()}
+        </span>
         <span className="habit-name">{habit.name}</span>
       </div>
       <div className="habit-card-side">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 import HabitList from "../components/HabitList";
-import AddHabitForm from "../components/AddhabitForm";
+import AddHabitForm from "../components/AddHabitForm";
 
 function Habits() {
   const [habits, setHabits] = useState([]);
@@ -23,9 +23,9 @@ function Habits() {
     fetchHabits();
   }, []);
 
-  const handleAdd = async (name, emoji) => {
-    const res = await api.post("/habits", { name, emoji });
-    setHabits((prev) => [...prev, res.data]);
+  const handleAdd = async (name, icon) => {
+  const res = await api.post('/habits', { name, icon });
+  setHabits((prev) => [...prev, res.data]);
   };
 
   if (loading) return <p>Loading habits...</p>;

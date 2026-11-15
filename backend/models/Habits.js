@@ -6,9 +6,9 @@ const habitSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  emoji: {
-    type: String,
-    default: "✅",
+  icon: {
+  type: String,
+  default: 'Footprints',
   },
   completedToday: {
     type: Boolean,

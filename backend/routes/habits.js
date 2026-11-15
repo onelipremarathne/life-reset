@@ -15,8 +15,8 @@ router.get('/', async (req,res)=>{
 // POST create a habit
 router.post('/', async (req,res)=>{
     try {
-        const { name, emoji } = req.body;
-        const habit = new Habit({ name, emoji });
+        const { name, icon } = req.body;
+        const habit = new Habit({ name, icon });
         const saved = await habit.save();
         res.status(201).json(saved);
   } catch (err) {
@@ -30,10 +30,10 @@ router.put('/:id', async (req, res) => {
     const habit = await Habit.findById(req.params.id);
     if (!habit) return res.status(404).json({ error: 'Habit not found' });
 
-    const { name, emoji, completedToday } = req.body;
+    const { name, icon, completedToday } = req.body;
 
     if (name !== undefined) habit.name = name;
-    if (emoji !== undefined) habit.emoji = emoji;
+    if (icon !== undefined) habit.icon = icon;
 
     if (completedToday !== undefined) {
       habit.completedToday = completedToday;
