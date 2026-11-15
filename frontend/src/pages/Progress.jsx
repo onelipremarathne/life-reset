@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 import api from '../api';
-import { getLast7Days } from '../utils/dateHelpers';
+import { getLast7Days, getLast14Days } from '../utils/dateHelpers';
+import { getHabitIcon } from '../utils/habitIcons';
+import SegmentedBar from '../components/SegmentedBar';
+import MoodChart from '../components/MoodChart';
 
 function Progress() {
   const [habits, setHabits] = useState([]);
+  const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/habits').then((res) => {
-      setHabits(res.data);
+    Promise.all([api.get('/habits'), api.get('/journal')]).then(([h, j]) => {
+      setHabits(h.data);
+      setEntries(j.data);
       setLoading(false);
     });
   }, []);
@@ -16,32 +21,73 @@ function Progress() {
   if (loading) return <p>Loading progress...</p>;
 
   const last7Days = getLast7Days();
+  const last14 = getLast14Days();
+
+  const totalPossible = habits.length * 7;
+  const totalCompleted = habits.reduce((sum, h) => {
+    return sum + last7.filter((date) => {
+      const entry = h.completionHistory.find((c) => c.date === date);
+      return entry && entry.completed;
+    }).length;
+  }, 0);
+  const overallPct = totalPossible === 0 ? 0 : Math.round((totalCompleted / totalPossible) * 100);
+
+  const moodDays = last14.map((date) => {
+    const match = entries.find((e) => e.date === date);
+    return { date, mood: match ? match.mood : null };
+  });
 
   return (
     <div className="progress-page">
-      <h2>This Week</h2>
-      {habits.length === 0 ? (
-        <p>No habits yet — add some on the Habits page.</p>
-      ) : (
-        habits.map((habit) => {
-          const completedCount = last7Days.filter((date) => {
-            const entry = habit.completionHistory.find((h) => h.date === date);
-            return entry && entry.completed;
-          }).length;
+      <h2>Progress</h2>
+      <p className="page-subtitle">The last seven days, habit by habit.</p>
 
-          const pct = Math.round((completedCount / 7) * 100);
+      <div className="progress-grid">
+        <div className="this-week-card">
+          <div className="card-header-row">
+            <h3>This Week</h3>
+            <span className="card-header-meta">{overallPct}% OVERALL</span>
+          </div>
 
-          return (
-            <div key={habit._id} className="progress-row">
-              <span className="progress-label">{habit.emoji} {habit.name}</span>
-              <div className="progress-bar-track">
-                <div className="progress-bar-fill" style={{ width: `${pct}%` }} />
-              </div>
-              <span className="progress-count">{completedCount}/7 days</span>
-            </div>
-          );
-        })
-      )}
+          {habits.length === 0 ? (
+            <p className="empty-state">No habits yet — add some on the Habits page.</p>
+          ) : (
+            habits.map((habit) => {
+              const segments = last7.map((date) => {
+                const entry = habit.completionHistory.find((c) => c.date === date);
+                return !!(entry && entry.completed);
+              });
+              const count = segments.filter(Boolean).length;
+              const pct = Math.round((count / 7) * 100);
+              const Icon = getHabitIcon(habit.icon);
+
+              return (
+                <div key={habit._id} className="progress-habit-row">
+                  <div className="progress-habit-header">
+                    <span className="progress-habit-label">
+                      <Icon size={14} strokeWidth={2.2} />
+                      {habit.name}
+                    </span>
+                    <span className="progress-habit-count">{count}/7</span>
+                  </div>
+                  <div className="progress-bar-track">
+                    <div className="progress-bar-fill" style={{ width: `${pct}%` }} />
+                  </div>
+                  <SegmentedBar segments={segments} />
+                </div>
+              );
+
+            })
+          )}
+    </div>
+    <div className="mood-card">
+          <h3>Mood, last 14 days</h3>
+          <MoodChart days={moodDays} />
+          <p className="mood-chart-note">
+            Bars show each day's journal mood from 1 to 10. Gaps are days without an entry.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

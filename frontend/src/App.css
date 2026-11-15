@@ -404,17 +404,74 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .journal-card-actions { display: flex; gap: var(--space-1); }
 
 /* Progress page */
-.progress-row {
+.progress-grid {
   display: grid;
-  grid-template-columns: 140px 1fr 70px;
-  align-items: center;
-  gap: var(--space-3);
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.this-week-card, .mood-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+}
+
+.mood-card h3 { font-family: var(--font-display); margin: 0 0 var(--space-4); font-size: 1rem; }
+
+.progress-habit-row {
   padding: var(--space-3) 0;
   border-bottom: 1px solid var(--border);
 }
-.progress-row:last-child { border-bottom: none; }
-.progress-label { font-size: 0.9rem; }
-.progress-count { font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+.progress-habit-row:last-child { border-bottom: none; }
+
+.progress-habit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+.progress-habit-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.progress-habit-count { font-size: 0.8rem; color: var(--text-secondary); }
+.progress-habit-row .progress-bar-track { margin-bottom: var(--space-2); }
+
+.segmented-bar { display: flex; gap: 4px; }
+.segmented-bar .segment {
+  flex: 1;
+  height: 16px;
+  border-radius: 4px;
+  background: var(--border);
+}
+.segmented-bar .segment.filled { background: var(--accent); }
+
+.mood-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 140px;
+  margin-bottom: var(--space-3);
+}
+.mood-bar-col { flex: 1; display: flex; align-items: flex-end; height: 100%; }
+.mood-bar {
+  width: 100%;
+  background: var(--accent);
+  border-radius: 3px 3px 0 0;
+  transition: height 0.2s ease;
+}
+.mood-bar.empty { background: var(--border); }
+
+.mood-chart-note { color: var(--text-secondary); font-size: 0.75rem; line-height: 1.5; margin: 0; }
+
+@media (max-width: 720px) {
+  .progress-grid { grid-template-columns: 1fr; }
+}
 
 /* Mobile */
 @media (max-width: 720px) {
