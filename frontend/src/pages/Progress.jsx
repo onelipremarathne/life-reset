@@ -9,18 +9,26 @@ function Progress() {
   const [habits, setHabits] = useState([]);
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     Promise.all([api.get('/habits'), api.get('/journal')]).then(([h, j]) => {
       setHabits(h.data);
       setEntries(j.data);
+    })
+    .catch((err) => {
+      console.error('Failed to load progress:', err);
+      setError('Failed to load progress data. Is the backend running?');
+    })
+    .finally(() => {
       setLoading(false);
     });
   }, []);
 
+  if (error) return <p>{error}</p>;
   if (loading) return <p>Loading progress...</p>;
 
-  const last7Days = getLast7Days();
+  const last7 = getLast7Days();
   const last14 = getLast14Days();
 
   const totalPossible = habits.length * 7;
