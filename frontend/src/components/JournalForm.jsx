@@ -1,36 +1,41 @@
 import { useState } from "react";
+import DotProgress from './DotProgress';
 
 function getToday() {
-  return new Date().toISOString().split("T")[0]; // "2026-09-10"
+  return new Date().toISOString().split('T')[0];
 }
 
-function JournalForm({ onAdd }) {
-  const [date, setDate] = useState(getToday());
-  const [title, setTitle] = useState("");
-  const [mood, setMood] = useState(5);
-  const [entry, setEntry] = useState("");
+function JournalForm({ mode = 'add', initialEntry, onSubmit, onCancel }) {
+  const isEdit = mode === 'edit';
+  const [date, setDate] = useState(initialEntry?.date || getToday());
+  const [title, setTitle] = useState(initialEntry?.title || '');
+  const [mood, setMood] = useState(initialEntry?.mood || 5);
+  const [entry, setEntry] = useState(initialEntry?.entry || '');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim() || !entry.trim()) return;
 
-    onAdd({ date, title, mood: Number(mood), entry });
+    onSubmit({ date, title, mood: Number(mood), entry });
 
-    // reset form
-    setTitle("");
-    setMood(5);
-    setEntry("");
-    setDate(getToday());
+    if (!isEdit) {
+      setTitle('');
+      setMood(5);
+      setEntry('');
+      setDate(getToday());
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="journal-form">
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
+      <h3 className="form-title">
+        {isEdit ? 'Edit entry' : <>New <span className="brand-accent">entry</span></>}
+      </h3>
 
+      <label className="form-label">Date</label>
+      <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+
+      <label className="form-label">Title</label>
       <input
         type="text"
         placeholder="Title (e.g. Good day)"
@@ -47,8 +52,10 @@ function JournalForm({ onAdd }) {
           value={mood}
           onChange={(e) => setMood(e.target.value)}
         />
+        <DotProgress total={10} filled={Number(mood)} />
       </label>
 
+      <label className="form-label">Entry</label>
       <textarea
         placeholder="Write about your day..."
         value={entry}
@@ -56,7 +63,12 @@ function JournalForm({ onAdd }) {
         rows={4}
       />
 
-      <button type="submit">Save Entry</button>
+      <div className="form-actions">
+        <button type="submit" className="submit-habit-btn">
+          {isEdit ? 'Save changes' : '+ New entry'}
+        </button>
+        {isEdit && <button type="button" onClick={onCancel} className="cancel-btn">Cancel</button>}
+      </div>
     </form>
   );
 }

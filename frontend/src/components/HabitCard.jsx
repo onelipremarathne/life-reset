@@ -2,6 +2,7 @@ import { getLast7Days } from '../utils/dateHelpers';
 import CircularCheckbox from './CircularCheckbox';
 import DotProgress from './DotProgress';
 import { getHabitIcon } from '../utils/habitIcons';
+import { Pencil, Trash2 } from 'lucide-react';
 
 function HabitCard({ habit, onToggle, onDelete, onEdit }) {
   const last7 = getLast7Days();
@@ -25,10 +26,10 @@ function HabitCard({ habit, onToggle, onDelete, onEdit }) {
       <div className="habit-card-side">
         <DotProgress total={7} filled={filled} />
         {onEdit && (
-          <button onClick={onEdit} className="icon-btn" aria-label="Edit habit">✎</button>
+           <button onClick={onEdit} className="icon-btn" aria-label="Edit habit"><Pencil size={14} /></button>
         )}
         {onDelete && (
-          <button onClick={onDelete} className="icon-btn danger" aria-label="Delete habit">🗑</button>
+           <button onClick={onDelete} className="icon-btn danger" aria-label="Delete habit"><Trash2 size={14} /></button>
         )}
       </div>
     </div>
