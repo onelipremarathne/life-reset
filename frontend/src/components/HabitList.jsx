@@ -1,28 +1,21 @@
 import api from "../api";
 import HabitCard from "./HabitCard";
 
-function HabitList({ habits, setHabits }) {
+function HabitList({ habits, setHabits, onEdit, onDelete }) {
   const handleToggle = async (habit) => {
     const res = await api.put(`/habits/${habit._id}`, {
       completedToday: !habit.completedToday,
     });
 
-    setHabits((current) =>
-      current.map((item) =>
+    setHabits((prev) =>
+      prev.map((item) =>
         item._id === habit._id ? res.data : item
       )
     );
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Delete this habit?")) return;
-
-    await api.delete(`/habits/${id}`);
-    setHabits((current) => current.filter((habit) => habit._id !== id));
-  };
-
   if (habits.length === 0) {
-    return <p>No habits yet — add one above.</p>;
+    return <p className="empty-state">No habits yet — add one to get started.</p>;
   }
 
   return (
@@ -32,6 +25,7 @@ function HabitList({ habits, setHabits }) {
           key={habit._id}
           habit={habit}
           onToggle={() => handleToggle(habit)}
+          onEdit={() => onEdit(habit)}
           onDelete={() => handleDelete(habit._id)}
         />
       ))}

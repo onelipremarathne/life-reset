@@ -455,3 +455,54 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   font-size: 0.9rem;
   align-self: flex-start;
 }
+
+.habits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.page-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: calc(var(--space-2) * -1);
+  margin-bottom: var(--space-4);
+}
+
+.form-title { font-family: var(--font-display); font-size: 1.2rem; margin: 0; }
+.form-subtitle { color: var(--text-secondary); font-size: 0.85rem; margin: 0 0 var(--space-2); }
+
+.form-actions { display: flex; gap: var(--space-2); align-items: center; }
+
+.cancel-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+.cancel-btn:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+
+.habit-list-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+}
+
+.habit-list-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+.habit-list-header h3 { font-family: var(--font-display); margin: 0; font-size: 1.1rem; }
+.habit-list-header span { color: var(--text-secondary); font-size: 0.8rem; }
+
+.empty-state { color: var(--text-secondary); font-size: 0.9rem; }
+
+@media (max-width: 720px) {
+  .habits-grid { grid-template-columns: 1fr; }
+}
