@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HABIT_ICON_KEYS, getHabitIcon, HABIT_ICON_KEYS, HABIT_ICONS } from '../utils/habitIcons';
+import { HABIT_ICON_KEYS, HABIT_ICONS } from '../utils/habitIcons';
 
 function AddHabitForm({mode = 'add', initialName = '', initialIcon = 'Footprints', onSubmit, onCancel}) {
   const [name, setName] = useState(initialName);

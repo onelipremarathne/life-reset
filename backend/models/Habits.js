@@ -10,10 +10,6 @@ const habitSchema = new mongoose.Schema({
   type: String,
   default: 'Footprints',
   },
-  completedToday: {
-    type: Boolean,
-    default: false,
-  },
   completionHistory: [
     {
       date: { type: String, required: true }, // "2026-08-23"
@@ -29,7 +25,9 @@ const habitSchema = new mongoose.Schema({
 habitSchema.virtual('completedToday').get(function(){
   const today = new Date().toISOString().split('T')[0];
   const entry = this.completionHistory.find((h)=> h.date === today);
+  return entry ? entry.completed : false;
 });
 
 habitSchema.set('toJSON',{virtuals:true})
+habitSchema.set("toObject", { virtuals: true });
 module.exports = mongoose.model('Habit', habitSchema);
