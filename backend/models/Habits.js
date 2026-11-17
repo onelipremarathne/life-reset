@@ -26,4 +26,10 @@ const habitSchema = new mongoose.Schema({
   },
 });
 
+habitSchema.virtual('completedToday').get(function(){
+  const today = new Date().toISOString().split('T')[0];
+  const entry = this.completionHistory.find((h)=> h.date === today);
+});
+
+habitSchema.set('toJSON',{virtuals:true})
 module.exports = mongoose.model('Habit', habitSchema);

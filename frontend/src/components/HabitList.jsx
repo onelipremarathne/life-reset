@@ -26,7 +26,7 @@ function HabitList({ habits, setHabits, onEdit, onDelete }) {
           habit={habit}
           onToggle={() => handleToggle(habit)}
           onEdit={() => onEdit(habit)}
-          onDelete={() => handleDelete(habit._id)}
+          onDelete={() => onDelete(habit._id)}
         />
       ))}
     </div>
