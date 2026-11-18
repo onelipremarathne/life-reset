@@ -1,17 +1,34 @@
 import { Pencil, Trash2 } from "lucide-react";
 
-function JournalEntryCard({ entry, onEdit, onDelete }) {
+function JournalEntryCard({ entry, onOpen, onEdit, onDelete }) {
+  const stop = (fn) => (e) => {
+    e.stopPropagation();
+    fn();
+  };
+
   return (
-    <div className="journal-card">
+    <div
+      className="journal-card clickable"
+      role="button"
+      tabIndex={0}
+      onClick={onOpen}
+      onKeyDown={(e) => {
+        if (e.target === e.currentTarget && e.key === "Enter") onOpen();
+      }}
+    >
       <div className="journal-card-header">
         <span className="journal-date">{entry.date}</span>
         <span className="journal-mood">Mood: {entry.mood}/10</span>
         <div className="journal-card-actions">
-          <button onClick={onEdit} className="icon-btn" aria-label="Edit entry">
+          <button
+            onClick={stop(onEdit)}
+            className="icon-btn"
+            aria-label="Edit entry"
+          >
             <Pencil size={14} />
           </button>
           <button
-            onClick={onDelete}
+            onClick={stop(onDelete)}
             className="icon-btn danger"
             aria-label="Delete entry"
           >

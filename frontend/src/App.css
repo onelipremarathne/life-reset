@@ -487,6 +487,102 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .journal-header-row h2 { margin-bottom: var(--space-1); }
 .journal-header-row .page-subtitle { margin: 0; }
 
+/* ---------- Journal reader ---------- */
+.journal-card.clickable { cursor: pointer; transition: border-color 0.15s ease, transform 0.15s ease; }
+.journal-card.clickable:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.reader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: var(--space-3);
+  background: rgba(52, 64, 47, 0.55);
+  backdrop-filter: blur(4px);
+}
+.reader-panel {
+  position: relative;
+  width: min(460px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+.reader-close {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface);
+  color: var(--text-secondary);
+}
+.reader-hint { margin: 0; color: var(--surface); font-size: 0.8rem; text-align: center; min-height: 1.2em; }
+.reader-loading { color: var(--surface); text-align: center; padding-top: 200px; }
+
+.reader-stage {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  transition: transform 0.6s cubic-bezier(0.5, 0, 0.75, 0), opacity 0.6s ease;
+}
+.reader-panel.tossing .reader-stage {
+  /* centre of the paper lands on the bin below it */
+  transform: translateY(calc(50% + 40px)) scale(0.12) rotate(24deg);
+  opacity: 0;
+}
+
+.reader-bin {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+}
+.reader-bin:disabled { opacity: 0.45; cursor: not-allowed; }
+.reader-bin.ready {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: var(--surface);
+  animation: bin-pulse 1.4s ease-in-out infinite;
+}
+.reader-panel.tossing .reader-bin { animation: bin-bump 0.4s ease 0.4s; }
+
+@keyframes bin-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+@keyframes bin-bump { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.18) rotate(-8deg); } }
+
+.reader-actions { display: flex; gap: var(--space-2); }
+.reader-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+}
+.reader-btn:hover { border-color: var(--accent); }
+.reader-btn:disabled { opacity: 0.5; }
+
 .today-tag {
   display: inline-block;
   margin-left: var(--space-2);

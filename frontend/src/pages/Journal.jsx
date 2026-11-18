@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../api';
 import JournalForm from '../components/JournalForm';
 import JournalEntryList from '../components/JournalEntryList';
+import JournalReader from '../components/JournalReader';
 
 function Journal() {
   const [entries, setEntries] = useState([]);
@@ -10,7 +11,8 @@ function Journal() {
   const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [editingEntry, setEditingEntry] = useState(null);
-
+  const [readingEntry, setReadingEntry] = useState(null);
+  
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -94,7 +96,19 @@ function Journal() {
         />
       )}
 
-      <JournalEntryList entries={entries} onEdit={openEdit} onDelete={handleDelete} />
+      <JournalEntryList entries={entries} onOpen={setReadingEntry} onEdit={openEdit} onDelete={handleDelete} />
+        {readingEntry && (
+          <JournalReader
+            entry={readingEntry}
+            onClose={() => setReadingEntry(null)}
+            onEdit={() => {
+              openEdit(readingEntry);
+              setReadingEntry(null);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onDelete={() => handleDelete(readingEntry._id)}
+          />
+        )}
     </div>
   );
 }

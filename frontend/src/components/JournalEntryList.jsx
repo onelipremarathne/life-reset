@@ -1,6 +1,6 @@
 import JournalEntryCard from './JournalEntryCard';
 
-function JournalEntryList({ entries,onEdit, onDelete }) {
+function JournalEntryList({ entries, onOpen, onEdit, onDelete }) {
   if (entries.length === 0) return <p className="empty-state">No journal entries yet — write your first one above.</p>;
 
   return (
@@ -9,6 +9,7 @@ function JournalEntryList({ entries,onEdit, onDelete }) {
         <JournalEntryCard
           key={entry._id}
           entry={entry}
+          onOpen={() => onOpen(entry)}
           onEdit={() => onEdit(entry)}
           onDelete={() => onDelete(entry._id)}
         />
