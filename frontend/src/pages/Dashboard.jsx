@@ -6,6 +6,7 @@ import { calculateStreak } from '../utils/streak';
 import HabitCard from '../components/HabitCard';
 import CompletionRing from '../components/CompletionRing';
 import WeekStrip from '../components/WeekStrip';
+import DailyCard from '../components/DailyCard';
 
 function Dashboard() {
   const [habits, setHabits] = useState([]);
@@ -142,9 +143,16 @@ function Dashboard() {
           )}
         </div>
 
-        <div className="metric-card">
-          <h3>Last 7 Days</h3>
-          <WeekStrip days={weekDays} />
+        <div className="dashboard-side">
+          <div className="metric-card">
+            <h3>Last 7 Days</h3>
+            <WeekStrip days={weekDays} />
+          </div>
+
+          <div className="metric-card">
+            <h3>Today's Card</h3>
+            <DailyCard />
+          </div>
         </div>
       </div>
     </div>
