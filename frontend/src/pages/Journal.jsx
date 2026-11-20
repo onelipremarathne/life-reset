@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../api';
-import JournalForm from '../components/JournalForm';
+import JournalPaper from '../components/JournalPaper';
 import JournalEntryList from '../components/JournalEntryList';
 import JournalReader from '../components/JournalReader';
 
@@ -87,12 +87,12 @@ function Journal() {
       </div>
 
       {showForm && (
-        <JournalForm
-          key={editingEntry?._id || 'new'}
-          mode={editingEntry ? 'edit' : 'add'}
-          initialEntry={editingEntry}
-          onSubmit={editingEntry ? handleSaveEdit : handleAdd}
-          onCancel={closeForm}
+        <JournalPaper
+        key={editingEntry?._id || 'new'}
+        mode={editingEntry ? 'edit' : 'add'}
+        initialEntry={editingEntry}
+        onSubmit={editingEntry ? handleSaveEdit : handleAdd}
+        onCancel={closeForm}
         />
       )}
 
@@ -104,7 +104,6 @@ function Journal() {
             onEdit={() => {
               openEdit(readingEntry);
               setReadingEntry(null);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onDelete={() => handleDelete(readingEntry._id)}
           />
