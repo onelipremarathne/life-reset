@@ -19,7 +19,6 @@ function HabitCard({ habit, onToggle, onDelete, onEdit,pending = false }) {
     transition={{ duration: 0.25 }}
     className={`habit-card ${completedToday ? 'completed' : ''}`}
     >
-      <div className={`habit-card ${habit.completedToday ? 'completed' : ''}`}>
         <div className="habit-card-main">
           <CircularCheckbox checked={completedToday} onChange={onToggle} disabled={pending}/>
           <span className="habit-icon-badge">
@@ -39,7 +38,6 @@ function HabitCard({ habit, onToggle, onDelete, onEdit,pending = false }) {
             <button onClick={onDelete} className="icon-btn danger" aria-label="Delete habit"><Trash2 size={14} /></button>
           )}
         </div>
-      </div>
     </motion.div>
   );
 }
