@@ -1,3 +1,5 @@
+import CountUp from "./CountUp";
+
 function CompletionRing({ percent, size = 100, strokeWidth = 8 }) {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -20,7 +22,7 @@ function CompletionRing({ percent, size = 100, strokeWidth = 8 }) {
           className="completion-ring-fill"
         />
       </svg>
-      <span className="completion-ring-label">{percent}%</span>
+      <span className="completion-ring-label"><CountUp value={percent} suffix="%" /></span>
     </div>
   );
 }

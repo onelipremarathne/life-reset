@@ -10,6 +10,8 @@ import WeekStrip from '../components/WeekStrip';
 import DailyCard from '../components/DailyCard';
 import { calculateXP, getLevelInfo } from '../utils/xp';
 import XpBar from '../components/XpBar';
+import Reveal from '@/components/Reveal';
+import CountUp from '@/components/CountUp';
 
 function Dashboard() {
   const [habits, setHabits] = useState([]);
@@ -71,14 +73,14 @@ function Dashboard() {
           </p>
           <h1>Life Reset <span className="brand-accent">Dashboard</span></h1>
         </div>
-        <div className="streak-pill">{streak} Day Streak</div>
+        <div className="streak-pill"><CountUp value={streak} /> Day Streak</div>
       </div>
       <XpBar {...levelInfo} />
 
       {error && <p className="form-error">{error}</p>}
 
       <div className="dashboard-grid">
-        <div className="today-habits">
+        <Reveal className="today-habits" index={0}>
           <div className="card-header-row">
             <h3>Today's Habits</h3>
             <span className="card-header-meta">{completedToday} OF {habits.length} COMPLETED</span>
@@ -90,46 +92,44 @@ function Dashboard() {
               <HabitCard key={habit._id} habit={habit} pending={isPending(habit._id)} onToggle={() => toggle(habit)} />
             ))
           )}
-        </div>
+        </Reveal>
 
         <div className="dashboard-side">
-          <div className="metric-card">
+          <Reveal className="metric-card" index={1}>
             <h3>Daily Completion</h3>
             <CompletionRing percent={progressPct} />
-          </div>
+          </Reveal>
 
-          <div className="metric-card">
+          <Reveal className="metric-card" index={2}>
             <h3>Quick Metrics</h3>
             <div className="quick-metrics-grid">
               <div className="quick-metric">
                 <span className="quick-metric-label">WEEKLY AVG</span>
-                <span className="quick-metric-value">{weeklyAvg}%</span>
+                <span className="quick-metric-value"><CountUp value={weeklyAvg} suffix="%" /></span>
               </div>
               <div className="quick-metric">
                 <span className="quick-metric-label">HABITS TRACKED</span>
-                <span className="quick-metric-value">{habits.length}</span>
+                <span className="quick-metric-value"><CountUp value={habits.length} /></span>
               </div>
               <div className="quick-metric">
                 <span className="quick-metric-label">DONE TODAY</span>
-                <span className="quick-metric-value">{completedToday}</span>
+                <span className="quick-metric-value"><CountUp value={completedToday} /></span>
               </div>
               <div className="quick-metric">
                 <span className="quick-metric-label">ENTRIES THIS WEEK</span>
-                <span className="quick-metric-value">{entriesThisWeek}</span>
+                <span className="quick-metric-value"><CountUp value={entriesThisWeek} /></span>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
 
       <div className="dashboard-grid">
-        <div className="today-journal-card">
+        <Reveal className="today-journal-card" index={3}>
           <div className="card-header-row">
             <h3>Daily Reflection</h3>
-            <Link to="/journal" state={{ openNew: true }}>
-              <button className="edit-entry-btn">
-                {todayEntry ? 'NEW ENTRY' : 'WRITE ENTRY'}
-              </button>
+            <Link to="/journal" state={todayEntry ? { editEntryId: todayEntry._id } : { openNew: true }}>
+              <button className="edit-entry-btn">{todayEntry ? 'EDIT ENTRY' : 'WRITE ENTRY'}</button>
             </Link>
           </div>
           {todayEntry ? (
@@ -141,18 +141,18 @@ function Dashboard() {
           ) : (
             <p className="empty-state">No entry yet today.</p>
           )}
-        </div>
+        </Reveal>
 
         <div className="dashboard-side">
-          <div className="metric-card">
+          <Reveal className="metric-card" index={4}>
             <h3>Last 7 Days</h3>
             <WeekStrip days={weekDays} />
-          </div>
+          </Reveal>
 
-          <div className="metric-card">
+          <Reveal className="metric-card" index={5}>
             <h3>Today's Card</h3>
             <DailyCard />
-          </div>
+          </Reveal>
         </div>
       </div>
     </div>

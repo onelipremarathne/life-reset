@@ -1,3 +1,5 @@
+import CountUp from "./CountUp";
+
 function XpBar({ level, xpIntoLevel, xpForNext, pct }) {
   return (
     <div className="xp-bar">
@@ -6,7 +8,7 @@ function XpBar({ level, xpIntoLevel, xpForNext, pct }) {
           Level <span className="brand-accent">{level}</span>
         </span>
         <span className="xp-count">
-          {xpIntoLevel} / {xpForNext} XP
+          <CountUp value={xpIntoLevel} /> / {xpForNext} XP
         </span>
       </div>
       <div
