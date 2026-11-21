@@ -7,15 +7,19 @@ function AddHabitForm({mode = 'add', initialName = '', initialIcon = 'Footprints
   const isEdit = mode === 'edit';
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!name.trim()) return;
-    onSubmit(name.trim(), icon);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!name.trim()) return;
+  try {
+    await onSubmit(name.trim(), icon);
     if (!isEdit) {
       setName('');
       setIcon('Footprints');
     }
-  };
+  } catch {
+    // parent shows the error; keep the user's input
+  }
+};
 
   return (
     <form onSubmit={handleSubmit} className="add-habit-form">
@@ -31,6 +35,7 @@ function AddHabitForm({mode = 'add', initialName = '', initialIcon = 'Footprints
         type="text"
         placeholder="Morning run"
         value={name}
+        maxLength={60}
         onChange={(e) => setName(e.target.value)}
       />
 

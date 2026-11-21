@@ -1,18 +1,8 @@
-import api from "../api";
 import HabitCard from "./HabitCard";
+import { useHabitToggle } from "../hooks/useHabitToggle";
 
-function HabitList({ habits, setHabits, onEdit, onDelete }) {
-  const handleToggle = async (habit) => {
-    const res = await api.put(`/habits/${habit._id}`, {
-      completedToday: !habit.completedToday,
-    });
-
-    setHabits((prev) =>
-      prev.map((item) =>
-        item._id === habit._id ? res.data : item
-      )
-    );
-  };
+function HabitList({ habits, setHabits, onEdit, onDelete, onError }) {
+  const { toggle, isPending } = useHabitToggle(setHabits, onError);
 
   if (habits.length === 0) {
     return <p className="empty-state">No habits yet — add one to get started.</p>;
@@ -24,7 +14,8 @@ function HabitList({ habits, setHabits, onEdit, onDelete }) {
         <HabitCard
           key={habit._id}
           habit={habit}
-          onToggle={() => handleToggle(habit)}
+          pending={isPending(habit._id)}
+          onToggle={() => toggle(habit)}
           onEdit={() => onEdit(habit)}
           onDelete={() => onDelete(habit._id)}
         />

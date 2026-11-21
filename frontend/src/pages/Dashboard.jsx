@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
-import { getTodayString, getLast7Days } from '../utils/dateHelpers';
+import { getTodayString, getLast7Days, isCompletedOn, weekStats } from '../utils/dateHelpers';
+import { useHabitToggle } from '../hooks/useHabitToggle';
 import { calculateStreak } from '../utils/streak';
 import HabitCard from '../components/HabitCard';
 import CompletionRing from '../components/CompletionRing';
@@ -12,6 +13,8 @@ function Dashboard() {
   const [habits, setHabits] = useState([]);
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { toggle, isPending } = useHabitToggle(setHabits, setError);
 
   const loadData = async () => {
     try {
@@ -21,6 +24,8 @@ function Dashboard() {
       ]);
       setHabits(habitsRes.data);
       setEntries(journalRes.data);
+    } catch {
+      setError('Failed to load your dashboard. Is the backend running?');
     } finally {
       setLoading(false);
     }
@@ -28,38 +33,25 @@ function Dashboard() {
 
   useEffect(() => { loadData(); }, []);
 
-  const handleToggle = async (habit) => {
-    const res = await api.put(`/habits/${habit._id}`, { completedToday: !habit.completedToday });
-    setHabits((prev) => prev.map((h) => (h._id === habit._id ? res.data : h)));
-  };
-
   if (loading) return <p>Loading dashboard...</p>;
+  if (error && habits.length === 0) return <p>{error}</p>;
 
   const today = getTodayString();
   const last7 = getLast7Days();
 
-  const completedToday = habits.filter((h) => h.completedToday).length;
+  const completedToday = habits.filter((h) => isCompletedOn(h, today)).length;
   const progressPct = habits.length === 0 ? 0 : Math.round((completedToday / habits.length) * 100);
   const streak = calculateStreak(habits);
 
-  const totalPossible = habits.length * 7;
-  const totalCompleted = habits.reduce((sum, h) => {
-    return sum + last7.filter((date) => {
-      const entry = h.completionHistory.find((c) => c.date === date);
-      return entry && entry.completed;
-    }).length;
-  }, 0);
-  const weeklyAvg = totalPossible === 0 ? 0 : Math.round((totalCompleted / totalPossible) * 100);
+  const { completed, possible } = weekStats(habits, last7);
+  const weeklyAvg = possible === 0 ? 0 : Math.round((completed / possible) * 100);
 
   const entriesThisWeek = entries.filter((e) => last7.includes(e.date)).length;
   const todayEntry = entries.find((e) => e.date === today) || null;
 
   const weekDays = last7.map((date) => {
     const dateObj = new Date(date + 'T00:00:00');
-    const anyCompleted = habits.some((h) => {
-      const entry = h.completionHistory.find((c) => c.date === date);
-      return entry && entry.completed;
-    });
+    const anyCompleted = habits.some((h) => isCompletedOn(h, date));
     return {
       label: dateObj.toLocaleDateString('en-US', { weekday: 'narrow' }),
       active: anyCompleted,
@@ -79,6 +71,8 @@ function Dashboard() {
         <div className="streak-pill">{streak} Day Streak</div>
       </div>
 
+      {error && <p className="form-error">{error}</p>}
+
       <div className="dashboard-grid">
         <div className="today-habits">
           <div className="card-header-row">
@@ -89,7 +83,7 @@ function Dashboard() {
             <p className="empty-state">No habits yet — add some on the Habits page.</p>
           ) : (
             habits.map((habit) => (
-              <HabitCard key={habit._id} habit={habit} onToggle={() => handleToggle(habit)} />
+              <HabitCard key={habit._id} habit={habit} pending={isPending(habit._id)} onToggle={() => toggle(habit)} />
             ))
           )}
         </div>

@@ -369,6 +369,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .form-subtitle { color: var(--text-secondary); font-size: 0.78rem; margin: 0 0 var(--space-2); }
 .form-label { font-size: 0.75rem; color: var(--text-secondary); margin-top: var(--space-1); }
 .form-actions { display: flex; gap: var(--space-2); align-items: center; }
+.form-error { color: var(--danger); font-size: 0.78rem; margin: 0 0 var(--space-2); }
 
 .add-habit-form input[type="text"],
 .journal-form input[type="date"],

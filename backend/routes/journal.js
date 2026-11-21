@@ -25,11 +25,17 @@ router.post('/', async (req,res)=>{
 
 router.put('/:id', async (req, res) => {
   try {
-    const updated = await JournalEntry.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
+    const { date, title, mood, entry } = req.body;
+    const update = {};
+    if (date !== undefined) update.date = date;
+    if (title !== undefined) update.title = title;
+    if (mood !== undefined) update.mood = mood;
+    if (entry !== undefined) update.entry = entry;
+
+    const updated = await JournalEntry.findByIdAndUpdate(req.params.id, update, {
+      new: true,
+      runValidators: true,
+    });
     if (!updated) return res.status(404).json({ error: 'Entry not found' });
     res.json(updated);
   } catch (err) {

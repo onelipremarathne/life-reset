@@ -18,8 +18,12 @@ function readFlipped(key) {
 }
 
 function saveFlipped(key, flipped) {
-  if (flipped) localStorage.setItem(key, "1");
-  else localStorage.removeItem(key);
+  try {
+    if (flipped) localStorage.setItem(key, "1");
+    else localStorage.removeItem(key);
+  } catch {
+    // storage unavailable (private mode, quota); ignore
+  }
 }
 
 function DailyCard() {

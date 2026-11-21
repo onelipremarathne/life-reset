@@ -1,24 +1,23 @@
-const toDateStr = (d) => d.toISOString().split("T")[0];
+import { toDateString, isCompletedOn, startDateOf } from './dateHelpers';
 
 export function calculateStreak(habits) {
   if (habits.length === 0) return 0;
 
-  const isDayComplete = (dateStr) =>
-    habits.every((habit) => {
-      const entry = habit.completionHistory.find((h) => h.date === dateStr);
-      return entry && entry.completed;
-    });
+  const isDayComplete = (dateStr) => {
+    const existing = habits.filter((h) => startDateOf(h) <= dateStr);
+    if (existing.length === 0) return false;
+    return existing.every((h) => isCompletedOn(h, dateStr));
+  };
 
-  let cursor = new Date();
-
-  if (!isDayComplete(toDateStr(cursor))) {
+  const cursor = new Date();
+  if (!isDayComplete(toDateString(cursor))) {
     cursor.setDate(cursor.getDate() - 1);
   }
+
   let streak = 0;
-  while (isDayComplete(toDateStr(cursor))) {
+  while (isDayComplete(toDateString(cursor))) {
     streak++;
     cursor.setDate(cursor.getDate() - 1);
   }
-
   return streak;
 }

@@ -1,9 +1,10 @@
-function CircularCheckbox({ checked, onChange }) {
+function CircularCheckbox({ checked, onChange,disabled = false }) {
   return (
     <button
       type="button"
       className={`circular-checkbox ${checked ? "checked" : ""}`}
       onClick={onChange}
+      disabled={disabled}
       aria-pressed={checked}
       aria-label={checked ? "Mark incomplete" : "Mark complete"}
     >

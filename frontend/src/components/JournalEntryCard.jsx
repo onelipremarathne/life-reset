@@ -13,7 +13,11 @@ function JournalEntryCard({ entry, onOpen, onEdit, onDelete }) {
       tabIndex={0}
       onClick={onOpen}
       onKeyDown={(e) => {
-        if (e.target === e.currentTarget && e.key === "Enter") onOpen();
+        if (e.target !== e.currentTarget) return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen();
+        }
       }}
     >
       <div className="journal-card-header">

@@ -1,20 +1,18 @@
-import { getLast7Days } from '../utils/dateHelpers';
+import { getLast7Days, getTodayString, isCompletedOn } from '../utils/dateHelpers';
 import CircularCheckbox from './CircularCheckbox';
 import DotProgress from './DotProgress';
 import { getHabitIcon } from '../utils/habitIcons';
 import { Pencil, Trash2 } from 'lucide-react';
 
-function HabitCard({ habit, onToggle, onDelete, onEdit }) {
+function HabitCard({ habit, onToggle, onDelete, onEdit,pending = false }) {
   const last7 = getLast7Days();
-  const filled = last7.filter((date) => {
-    const entry = habit.completionHistory.find((h) => h.date === date);
-    return entry && entry.completed;
-  }).length;
+  const filled = last7.filter((date) => isCompletedOn(habit, date)).length;
+  const completedToday = isCompletedOn(habit, getTodayString());
 
   return (
     <div className={`habit-card ${habit.completedToday ? 'completed' : ''}`}>
       <div className="habit-card-main">
-        <CircularCheckbox checked={habit.completedToday} onChange={onToggle} />
+        <CircularCheckbox checked={completedToday} onChange={onToggle} disabled={pending}/>
         <span className="habit-icon-badge">
           {(() => {
             const Icon = getHabitIcon(habit.icon);
