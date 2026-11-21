@@ -10,6 +10,8 @@ import {
 import { getHabitIcon } from "../utils/habitIcons";
 import SegmentedBar from "../components/SegmentedBar";
 import MoodChart from "../components/MoodChart";
+import { getBadges } from "../utils/badges";
+import BadgeGrid from "../components/BadgeGrid";
 
 function Progress() {
   const [habits, setHabits] = useState([]);
@@ -59,6 +61,8 @@ function Progress() {
     const match = entries.find((e) => e.date === date);
     return { date, mood: match ? match.mood : null };
   });
+
+  const badges = getBadges(habits, entries);
 
   return (
     <div className="progress-page">
@@ -120,6 +124,7 @@ function Progress() {
           </p>
         </div>
       </div>
+      <BadgeGrid badges={badges} />
     </div>
   );
 }

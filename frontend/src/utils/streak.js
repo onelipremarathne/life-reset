@@ -10,7 +10,7 @@ export function calculateStreak(habits) {
   if (habits.length === 0) return 0;
 
   const cursor = new Date();
-  if (!isDayComplete(toDateString(cursor))) {
+  if (!isDayComplete(habits,toDateString(cursor))) {
     cursor.setDate(cursor.getDate() - 1);
   }
 

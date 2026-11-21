@@ -775,6 +775,50 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .progress-habit-count { font-family: var(--font-display); font-size: 1rem; color: var(--text-secondary); }
 .progress-habit-row .progress-bar-track { margin-bottom: var(--space-2); }
 
+/* ---------- Badges ---------- */
+.badges-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+}
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-3);
+}
+.badge {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-3);
+  background: var(--surface-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.badge-icon {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-1);
+}
+.badge.earned .badge-icon {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+.badge.locked { opacity: 0.55; }
+.badge-name { font-family: var(--font-display); font-size: 1.05rem; }
+.badge-desc { font-size: 0.7rem; color: var(--text-secondary); line-height: 1.4; }
+
 .segmented-bar { display: flex; gap: 6px; }
 .segmented-bar .segment {
   flex: 1;
