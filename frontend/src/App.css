@@ -87,6 +87,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* ---------- Layout shell ---------- */
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background:#f6f3e5;
   display: flex;
   align-items: center;
   justify-content: space-between;
