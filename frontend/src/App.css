@@ -492,8 +492,29 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .journal-date { letter-spacing: 0.04em; }
 .journal-mood { flex: 1; text-align: right; }
 .journal-card h3 { margin: 0 0 var(--space-1); font-size: 1.15rem; }
-.journal-card p { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.6; margin: 0; }
-.journal-card-actions { display: flex; gap: var(--space-1); }
+/* Long unbroken strings must wrap instead of overflowing the card */
+.journal-card,
+.reflection-preview {
+  min-width: 0;
+  overflow: hidden;            /* last-resort safety net */
+}
+
+.journal-card h3,
+.journal-card p,
+.reflection-preview h4,
+.reflection-preview p {
+  overflow-wrap: anywhere;     /* breaks long words only when needed */
+  word-break: break-word;      /* fallback for older Safari */
+}
+
+/* Preview only: show at most 3 lines, the full text lives in the reader */
+.journal-card p,
+.reflection-preview p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}.journal-card-actions { display: flex; gap: var(--space-1); }
 
 .journal-header-row {
   display: flex;
@@ -585,7 +606,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .reader-bin.bump { animation: bin-bump 0.4s ease 0.4s; }
 @keyframes bin-bump { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.2) rotate(-8deg); } }
 
-.reader-actions { display: flex; gap: var(--space-2); }
+.reader-actions { align-items: center; flex-wrap: wrap; justify-content: center; }
+.reader-pager { display: flex; align-items: center; gap: var(--space-2); }
+.reader-page-count { color: var(--surface); font-size: 0.75rem; letter-spacing: 0.06em; min-width: 84px; text-align: center; }
 .reader-btn {
   display: inline-flex;
   align-items: center;
@@ -701,7 +724,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 .paper-error { margin: 0; color: var(--danger); font-size: 0.78rem; }
 
-.paper-actions { display: flex; justify-content: flex-end; gap: var(--space-2); }
+.paper-actions { align-items: center; }
+.paper-count { margin-right: auto; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+.paper-count.near { color: var(--danger); }
+
 .paper-ghost {
   background: transparent;
   border: none;

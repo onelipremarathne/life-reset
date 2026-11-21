@@ -126,8 +126,10 @@ function Dashboard() {
         <div className="today-journal-card">
           <div className="card-header-row">
             <h3>Daily Reflection</h3>
-            <Link to="/journal" state={todayEntry ? { editEntryId: todayEntry._id } : { openNew: true }}>
-              <button className="edit-entry-btn">{todayEntry ? 'EDIT ENTRY' : 'WRITE ENTRY'}</button>
+            <Link to="/journal" state={{ openNew: true }}>
+              <button className="edit-entry-btn">
+                {todayEntry ? 'NEW ENTRY' : 'WRITE ENTRY'}
+              </button>
             </Link>
           </div>
           {todayEntry ? (

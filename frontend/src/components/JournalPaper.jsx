@@ -35,6 +35,8 @@ function JournalPaper({ mode = "add", initialEntry, onSubmit, onCancel }) {
     }
   };
 
+  const ENTRY_LIMIT = 5000;
+
   return (
     <div className="reader-overlay">
       <form className="paper-sheet" onSubmit={handleSubmit}>
@@ -91,6 +93,7 @@ function JournalPaper({ mode = "add", initialEntry, onSubmit, onCancel }) {
           className="paper-lines"
           placeholder="Write about your day…"
           aria-label="Entry"
+          maxLength={ENTRY_LIMIT}
           value={entry}
           onChange={(e) => setEntry(e.target.value)}
           autoFocus={!isEdit}
@@ -99,6 +102,9 @@ function JournalPaper({ mode = "add", initialEntry, onSubmit, onCancel }) {
         {error && <p className="paper-error">{error}</p>}
 
         <div className="paper-actions">
+          <span className={`paper-count ${entry.length > ENTRY_LIMIT * 0.9 ? "near" : ""}`}>
+              {entry.length}/{ENTRY_LIMIT}
+          </span>
           <button type="button" className="paper-ghost" onClick={onCancel}>
             Cancel
           </button>
