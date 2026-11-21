@@ -184,6 +184,18 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .dashboard-side { display: flex; flex-direction: column; gap: var(--space-4); }
 
+/* ---------- XP bar ---------- */
+.xp-bar { margin-bottom: var(--space-4); }
+.xp-bar-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+.xp-level { font-family: var(--font-display); font-size: 1.3rem; }
+.xp-count { font-size: 0.65rem; letter-spacing: 0.06em; color: var(--text-secondary); }
+.xp-bar .progress-bar-track { height: 8px; }
+
 /* ---------- Daily card ---------- */
 .daily-card-wrap { display: flex; justify-content: center; padding: var(--space-2) 0 var(--space-3); }
 

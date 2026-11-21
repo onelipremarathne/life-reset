@@ -8,6 +8,8 @@ import HabitCard from '../components/HabitCard';
 import CompletionRing from '../components/CompletionRing';
 import WeekStrip from '../components/WeekStrip';
 import DailyCard from '../components/DailyCard';
+import { calculateXP, getLevelInfo } from '../utils/xp';
+import XpBar from '../components/XpBar';
 
 function Dashboard() {
   const [habits, setHabits] = useState([]);
@@ -42,6 +44,7 @@ function Dashboard() {
   const completedToday = habits.filter((h) => isCompletedOn(h, today)).length;
   const progressPct = habits.length === 0 ? 0 : Math.round((completedToday / habits.length) * 100);
   const streak = calculateStreak(habits);
+  const levelInfo = getLevelInfo(calculateXP(habits, entries));
 
   const { completed, possible } = weekStats(habits, last7);
   const weeklyAvg = possible === 0 ? 0 : Math.round((completed / possible) * 100);
@@ -70,6 +73,7 @@ function Dashboard() {
         </div>
         <div className="streak-pill">{streak} Day Streak</div>
       </div>
+      <XpBar {...levelInfo} />
 
       {error && <p className="form-error">{error}</p>}
 
