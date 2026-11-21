@@ -1,6 +1,47 @@
 # Life Reset Dashboard
 
-A full-stack personal productivity dashboard for tracking daily habits, journaling, and weekly progress with XP, levels and milestone badges. Built to learn and demonstrate the MERN stack (MongoDB, Express, React, Node.js).
+Life Reset is a full-stack personal productivity dashboard designed to help users build consistent daily routines, track personal growth, and reflect on their progress.
+
+It combines habit tracking, journaling, and gamified progress features into one interactive experience, built using the MERN stack.
+
+![React](https://img.shields.io/badge/React-2026-61DAFB?logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
+
+
+## Screenshots
+<div align="center">
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/dashboard.png" width="100%" alt="Dashboard" />
+      <br />
+      <b>Dashboard</b>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/habits.png" width="100%" alt="Habit Management" />
+      <br />
+      <b>Habit Management</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/journal.png" width="100%" alt="Journal" />
+      <br />
+      <b>Journal</b>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/progress.png" width="100%" alt="Progress Tracking" />
+      <br />
+      <b>Progress Tracking</b>
+    </td>
+  </tr>
+</table>
+
+</div>
 
 ## Features
 
@@ -97,4 +138,4 @@ Visit `http://localhost:5173`.
 - Study targets with daily and weekly goals, session tracking, and progress analytics
 - Collectible daily card collection
 - Habit schedules (specific days of the week)
-- Dark mode
+- Data backup and restore.
