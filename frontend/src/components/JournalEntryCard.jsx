@@ -1,4 +1,5 @@
 import { Pencil, Trash2 } from "lucide-react";
+import { motion } from "motion/react";
 
 function JournalEntryCard({ entry, onOpen, onEdit, onDelete }) {
   const stop = (fn) => (e) => {

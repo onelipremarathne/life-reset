@@ -1,4 +1,5 @@
 import JournalEntryCard from './JournalEntryCard';
+import { AnimatePresence } from "motion/react";
 
 function JournalEntryList({ entries, onOpen, onEdit, onDelete }) {
   if (entries.length === 0) return <p className="empty-state">No journal entries yet — write your first one above.</p>;
