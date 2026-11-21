@@ -7,7 +7,12 @@ function JournalEntryCard({ entry, onOpen, onEdit, onDelete }) {
   };
 
   return (
-    <div
+    <motion.div
+      layout="position"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, x: -24 }}
+      whileHover={{ y: -2 }}
       className="journal-card clickable"
       role="button"
       tabIndex={0}
@@ -42,7 +47,7 @@ function JournalEntryCard({ entry, onOpen, onEdit, onDelete }) {
       </div>
       <h3>{entry.title}</h3>
       <p>{entry.entry}</p>
-    </div>
+    </motion.div>
   );
 }
 

@@ -1,5 +1,6 @@
 import HabitCard from "./HabitCard";
 import { useHabitToggle } from "../hooks/useHabitToggle";
+import { AnimatePresence } from "motion/react";
 
 function HabitList({ habits, setHabits, onEdit, onDelete, onError }) {
   const { toggle, isPending } = useHabitToggle(setHabits, onError);
@@ -10,6 +11,7 @@ function HabitList({ habits, setHabits, onEdit, onDelete, onError }) {
 
   return (
     <div className="habit-list">
+      <AnimatePresence initial={false}>
       {habits.map((habit) => (
         <HabitCard
           key={habit._id}
@@ -20,6 +22,7 @@ function HabitList({ habits, setHabits, onEdit, onDelete, onError }) {
           onDelete={() => onDelete(habit._id)}
         />
       ))}
+      </AnimatePresence>
     </div>
   );
 }

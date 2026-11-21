@@ -5,6 +5,7 @@ function JournalEntryList({ entries, onOpen, onEdit, onDelete }) {
 
   return (
     <div className="journal-list">
+      <AnimatePresence initial={false}>
       {entries.map((entry) => (
         <JournalEntryCard
           key={entry._id}
@@ -14,6 +15,7 @@ function JournalEntryList({ entries, onOpen, onEdit, onDelete }) {
           onDelete={() => onDelete(entry._id)}
         />
       ))}
+      </AnimatePresence>
     </div>
   );
 }

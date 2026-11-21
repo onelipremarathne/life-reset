@@ -526,8 +526,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .journal-header-row .page-subtitle { margin: 0; }
 
 /* ---------- Journal reader ---------- */
-.journal-card.clickable { cursor: pointer; transition: border-color 0.15s ease, transform 0.15s ease; }
-.journal-card.clickable:hover { border-color: var(--accent); transform: translateY(-1px); }
+.journal-card.clickable { cursor: pointer; transition: border-color 0.15s ease; }
+.journal-card.clickable:hover { border-color: var(--accent); }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
