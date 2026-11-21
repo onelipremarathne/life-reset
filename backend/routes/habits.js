@@ -53,4 +53,15 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// DELETE a habit
+router.delete("/:id", async (req, res) => {
+  try {
+    const deleted = await Habit.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ error: "Habit not found" });
+    res.json({ message: "Habit deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
